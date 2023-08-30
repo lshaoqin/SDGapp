@@ -3,7 +3,10 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
+  const [goodNameInput, setgoodNameInput] = useState("");
+  const [goodStrengthsInput, setgoodStrengthsInput] = useState("");
+  const [targetAudienceInput, settargetAudienceInput] = useState("");
+  const [personality, setPersonalityInput] = useState("");
   const [result, setResult] = useState();
 
   async function onSubmit(event) {
@@ -14,7 +17,11 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ animal: animalInput }),
+        body: JSON.stringify({ goodName: goodNameInput
+          , goodStrengths: goodStrengthsInput
+          , targetAudience: targetAudienceInput
+          , personality: personality
+         }),
       });
 
       const data = await response.json();
@@ -23,7 +30,7 @@ export default function Home() {
       }
 
       setResult(data.result);
-      setAnimalInput("");
+      console.log(data.result)
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -34,22 +41,43 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>OpenAI Quickstart</title>
-        <link rel="icon" href="/dog.png" />
+        <title>SDG Demo</title>
+        <link rel="icon" href="/tiktok.png" />
       </Head>
 
       <main className={styles.main}>
-        <img src="/dog.png" className={styles.icon} />
-        <h3>Name my pet</h3>
+        <img src="/tiktok.png" className={styles.icon} />
+        <h3>Demo for TikTok</h3>
         <form onSubmit={onSubmit}>
           <input
             type="text"
-            name="animal"
-            placeholder="Enter an animal"
-            value={animalInput}
-            onChange={(e) => setAnimalInput(e.target.value)}
+            name="goodName"
+            placeholder="What is the name of your good?"
+            value={goodNameInput}
+            onChange={(e) => setgoodNameInput(e.target.value)}
           />
-          <input type="submit" value="Generate names" />
+          <input
+            type="text"
+            name="goodStrengths"
+            placeholder="What are the strengths of your good?"
+            value={goodStrengthsInput}
+            onChange={(e) => setgoodStrengthsInput(e.target.value)}
+          />
+          <input
+            type="text"
+            name="targetAudience"
+            placeholder="Who is your target audience?"
+            value={targetAudienceInput}
+            onChange={(e) => settargetAudienceInput(e.target.value)}
+          />
+          <input
+            type="text"
+            name="personality"
+            placeholder="What is your personality?"
+            value={personality}
+            onChange={(e) => setPersonalityInput(e.target.value)}
+          />
+          <input type="submit" value="Generate" />
         </form>
         <div className={styles.result}>{result}</div>
       </main>
